@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.leefly.project.dao.mapper.EquipmentMapper">
+    <resultMap id="EquipmentResultMap" type="xyz.leefly.project.bo.Equipment">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="capacity" property="capacity" jdbcType="INTEGER"/>
+        <result column="output" property="output" jdbcType="INTEGER"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+
+        <result column="deleted" property="deleted" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIME"/>
+        <result column="update_time" property="updateTime" jdbcType="TIME"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id, type, capacity, output, unit, deleted, create_time, update_time
+    </sql>
+
+    <insert id="batchSaveEquipments" timeout="100">
+        insert into equipment (
+        type,
+        capacity,
+        output,
+        unit,
+        company_id,
+        deleted,
+        create_time,
+        update_time
+        ) values
+        <foreach collection="equipments" item="item" index="index" separator=",">
+            (
+            #{item.type},
+            #{item.capacity},
+            #{item.output},
+            #{item.unit},
+            #{item.companyId},
+            #{item.deleted},
+            #{item.createTime},
+            #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.leefly.project.dao.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="xyz.leefly.project.bo.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password_md5" property="password" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="deleted" property="deleted" jdbcType="TINYINT"/>
+        <result column="created" property="created" jdbcType="TIME"/>
+        <result column="updated" property="updated" jdbcType="TIME"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id, username, password_md5, nickname, status, deleted, created, updated
+    </sql>
+
+    <select id="getUserByUsername" resultMap="UserResultMap" timeout="50">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM opt_user
+        WHERE username = #{username}
+    </select>
+
+    <insert id="registerUser" timeout="100">
+        INSERT INTO
+        opt_user
+        (username, password_md5)
+        VALUE
+        (#{username}, #{password})
+    </insert>
+
+    <update id="updateUser" parameterType="xyz.leefly.project.bo.User" timeout="50">
+        UPDATE
+        opt_user
+        <set>
+            updated = sysdate(),
+            <if test="password != null">
+                password_md5 = #{password},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="checkUserByUsernameAndPassword" resultType="boolean" timeout="100">
+        SELECT
+        id
+        FROM
+        opt_user
+        WHERE
+        username =#{username}
+        AND
+        password_md5 = #{password}
+    </select>
+
+    <update id="deleteUserLogic" parameterType="long" timeout="50">
+        UPDATE
+        opt_user
+        SET
+        updated = sysdate(),
+        deleted = 1
+        WHERE
+        id = #{id}
+    </update>
+
+</mapper>

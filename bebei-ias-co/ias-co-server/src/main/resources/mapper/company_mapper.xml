@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.leefly.project.dao.mapper.CompanyMapper">
+    <resultMap id="CompanyResultMap" type="xyz.leefly.project.bo.Company">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="nature" property="nature" jdbcType="VARCHAR"/>
+        <result column="legal_person" property="legalPerson" jdbcType="VARCHAR"/>
+        <result column="business_license" property="businessLicense" jdbcType="VARCHAR"/>
+        <result column="contact" property="contact" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="stuff_number" property="stuffNumber" jdbcType="INTEGER"/>
+        <result column="last_year_production_value" property="lastYearProductionValue" jdbcType="INTEGER"/>
+        <result column="production_value_unit" property="productionValueUnit" jdbcType="VARCHAR"/>
+        <result column="laboratory_level" property="laboratoryLevel" jdbcType="VARCHAR"/>
+        <result column="authentication" property="authentication" jdbcType="VARCHAR"/>
+        <result column="production_license" property="productionLicense" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="check_year" property="checkYear" jdbcType="VARCHAR"/>
+        <result column="deleted" property="deleted" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIME"/>
+        <result column="update_time" property="updateTime" jdbcType="TIME"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        id, name, nature, legal_person, business_license, contact, phone, area, address,
+        stuff_number, last_year_production_value, production_value_unit, laboratory_level,
+        authentication, production_license, status, check_year, deleted, create_time, update_time
+    </sql>
+
+    <insert id="saveCompany" timeout="100">
+        insert into company (
+            name,
+            nature,
+            legal_person,
+            business_license,
+            contact,
+            phone,
+            area,
+            address,
+            stuff_number,
+            last_year_production_value,
+            production_value_unit,
+            laboratory_level,
+            authentication,
+            production_license,
+            status,
+            check_year,
+            deleted,
+            create_time,
+            update_time
+        ) values (
+            #{name},
+            #{nature},
+            #{legalPerson},
+            #{contact},
+            #{phone},
+            #{area},
+            #{address},
+            #{stuffNumber},
+            #{lastYearProductionValue},
+            #{productionValueUnit},
+            #{laboratoryLevel},
+            #{authentication},
+            #{productionLicense},
+            0,
+            #{checkYear},
+            0,
+            sysdate(),
+            sysdate()
+        )
+    </insert>
+
+</mapper>
