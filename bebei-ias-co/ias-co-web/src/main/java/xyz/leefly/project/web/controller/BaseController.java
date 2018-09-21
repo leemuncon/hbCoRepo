@@ -19,7 +19,7 @@ public class BaseController {
 
     @RequestMapping(value = {"", "index", "home"}, method = RequestMethod.GET)
     public String index() {
-        return "index";
+        return "redirect:/list";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -28,7 +28,7 @@ public class BaseController {
         if (userName != null) {
             return "redirect:/index";
         }
-        return "login";
+        return "index";
     }
 
     @ResponseBody
@@ -52,6 +52,16 @@ public class BaseController {
     public String logout() {
         // todo
         return "index";
+    }
+
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String list() {
+        return "list";
+    }
+
+    @RequestMapping(value = "save", method = RequestMethod.GET)
+    public String save() {
+        return "save";
     }
 
 }

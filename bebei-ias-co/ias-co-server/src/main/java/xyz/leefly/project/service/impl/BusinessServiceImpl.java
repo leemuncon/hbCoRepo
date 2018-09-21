@@ -1,8 +1,12 @@
 package xyz.leefly.project.service.impl;
 
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.leefly.project.bo.Company;
 import xyz.leefly.project.bo.Equipment;
@@ -19,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Service
 public class BusinessServiceImpl implements BusinessService {
 
     @Autowired
@@ -62,21 +67,27 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public Page<Company> queryCompanies(CompanyQuery query, int pageNo, int pageSize) {
         Page<Company> page = new Page<>(pageNo, pageSize);
-        page.setRecords(companyMapper.selectPage(page, null));
+        EntityWrapper<Company> wrapper = Condition.wrapper();
+
+        page.setRecords(companyMapper.selectPage(page, wrapper));
         return page;
     }
 
     @Override
     public Page<Equipment> queryEquipments(Long companyId, int pageNo, int pageSize) {
         Page<Equipment> page = new Page<>(pageNo, pageSize);
-        page.setRecords(equipmentMapper.selectPage(page, null));
+        EntityWrapper<Equipment> wrapper = Condition.wrapper();
+        wrapper.eq("company_id", companyId);
+        page.setRecords(equipmentMapper.selectPage(page, wrapper));
         return page;
     }
 
     @Override
     public Page<Product> queryProducts(Long companyId, int pageNo, int pageSize) {
         Page<Product> page = new Page<>(pageNo, pageSize);
-        page.setRecords(productMapper.selectPage(page, null));
+        EntityWrapper<Product> wrapper = Condition.wrapper();
+        wrapper.eq("company_id", companyId);
+        page.setRecords(productMapper.selectPage(page, wrapper));
         return page;
     }
 
@@ -87,7 +98,13 @@ public class BusinessServiceImpl implements BusinessService {
             return null;
         }
         EnterpriseInfo info = new EnterpriseInfo();
+        EntityWrapper<Product> pw = Condition.wrapper();
+        List<Product> products = productMapper.selectList(pw.eq("company_id", companyId));
+        info.setProducts(products);
 
+        EntityWrapper<Equipment> ew = Condition.wrapper();
+        List<Equipment> equipments = equipmentMapper.selectList(ew.eq("company_id", companyId));
+        info.setEquipments(equipments);
         return info;
     }
 }
