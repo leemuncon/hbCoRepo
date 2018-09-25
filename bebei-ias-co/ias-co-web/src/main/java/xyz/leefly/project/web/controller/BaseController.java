@@ -19,7 +19,7 @@ public class BaseController {
 
     @RequestMapping(value = {"", "index", "home"}, method = RequestMethod.GET)
     public String index() {
-        return "redirect:/list";
+        return "index";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)

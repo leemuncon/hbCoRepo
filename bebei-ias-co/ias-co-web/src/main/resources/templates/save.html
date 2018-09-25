@@ -1,150 +1,205 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Amaze UI Admin index Examples</title>
-    <meta name="description" content="这是一个 save 页面">
-    <meta name="keywords" content="index">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-
-    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
-    <link rel="stylesheet" href="../assets/css/amazeui.min.css" />
-    <link rel="stylesheet" href="../assets/css/amazeui.datatables.min.css" />
-    <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/jquery.min.js"></script>
-    <script src="../assets/js/echarts.min.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>主页</title>
+    <link rel="stylesheet" href="../assets/layui/css/layui.css">
 </head>
 
-<body data-type="index">
-    <script src="../assets/js/theme.js"></script>
-    <div class="am-g tpl-g">
-        <!-- 菜单区域 -->
-        <div th:replace="common/menu::html" ></div>
+<style>
+    .layui-table-view .layui-table {
+        width: 100%;
+    }
+</style>
 
-        <!-- 内容区域 -->
-        <div class="tpl-content-wrapper">
-            <form class="am-form">
-                <div class="am-form-group">
-                    <label for="doc-ipt-email-1">公司名称</label>
-                    <input type="email" class="" id="doc-ipt-email-1" placeholder="公司名称">
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <!-- top -->
+    <div th:replace="common/top::html"></div>
+
+    <!-- left -->
+    <div th:replace="common/left::html"></div>
+
+    <!-- 内容主体区域 -->
+    <div class="layui-body">
+        <div style="padding: 15px;">
+
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公司名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="企业名称" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">企业性质</label>
-                    <input type="password" class="" id="doc-ipt-pwd-1" placeholder="企业性质">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">企业性质</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="企业性质" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">法人代表</label>
-                    <input type="password" class="" id="doc-ipt-pwd-1" placeholder="法人代表">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">法人代表</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="法人代表" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">营业执照</label>
-                    <input type="password" class="" id="doc-ipt-pwd-1" placeholder="营业执照">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">营业执照</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="营业执照" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">联系人</label>
-                    <input type="password" class="" id="doc-ipt-pwd-1" placeholder="联系人">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="联系人" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">联系电话</label>
-                    <input type="password" class="" id="doc-ipt-pwd-1" placeholder="联系电话">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系电话</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="联系电话" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">省</label>
-                    <select data-am-selected>
-                        <option value="a">Apple</option>
-                        <option value="b" selected>Banana</option>
-                        <option value="o">Orange</option>
-                        <option value="m">Mango</option>
-                        <option value="d" disabled>禁用鸟</option>
-                    </select>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">区域</label>
+                    <div class="layui-input-inline">
+                        <select name="quiz1">
+                            <option value="">请选择省</option>
+                            <option value="浙江" selected="">浙江省</option>
+                            <option value="你的工号">江西省</option>
+                            <option value="你最喜欢的老师">福建省</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select name="quiz2">
+                            <option value="">请选择市</option>
+                            <option value="杭州">杭州</option>
+                            <option value="宁波" disabled="">宁波</option>
+                            <option value="温州">温州</option>
+                            <option value="温州">台州</option>
+                            <option value="温州">绍兴</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select name="quiz3">
+                            <option value="">请选择县/区</option>
+                            <option value="西湖区">西湖区</option>
+                            <option value="余杭区">余杭区</option>
+                            <option value="拱墅区">临安市</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">市</label>
-                    <select data-am-selected>
-                        <option value="a">Apple</option>
-                        <option value="b" selected>Banana</option>
-                        <option value="o">Orange</option>
-                        <option value="m">Mango</option>
-                        <option value="d" disabled>禁用鸟</option>
-                    </select>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">详细地址</label>
+                    <div class="layui-input-block">
+                        <textarea name="desc" placeholder="详细地址" class="layui-textarea"></textarea>
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">县</label>
-                    <select data-am-selected>
-                        <option value="a">Apple</option>
-                        <option value="b" selected>Banana</option>
-                        <option value="o">Orange</option>
-                        <option value="m">Mango</option>
-                        <option value="d" disabled>禁用鸟</option>
-                    </select>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">产品及产量</label>
+                    <div class="layui-input-block">
+                        <table id="products" class="layui-hide" lay-filter="products"></table>
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">详细地址</label>
-                    <textarea class="" rows="5" id="doc-ta-1" placeholder="详细地址"></textarea>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">企业设备</label>
+                    <div class="layui-input-block">
+                        <table id="equipments" class="layui-hide" lay-filter="equipments"></table>
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">实验室能力水平</label>
-                    <textarea class="" rows="5" id="doc-ta-1" placeholder="实验室能力水平"></textarea>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">企业人数</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="企业人数" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">认证情况</label>
-                    <textarea class="" rows="5" id="doc-ta-1" placeholder="认证情况"></textarea>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">去年产值（万元）</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="去年产值（万元）" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">生产许可证</label>
-                    <input type="password" class="" id="doc-ipt-pwd-1" placeholder="生产许可证">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">实验室能力水平</label>
+                    <div class="layui-input-block">
+                        <textarea name="desc" placeholder="实验室能力水平" class="layui-textarea"></textarea>
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-1">生产许可证</label>
-                    <input type="password" class="" id="doc-ipt-pwd-1" placeholder="生产许可证">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">认证情况</label>
+                    <div class="layui-input-block">
+                        <textarea name="desc" placeholder="认证情况" class="layui-textarea"></textarea>
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-select-2">企业状态</label>
-                    <select multiple class="" id="doc-select-2">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">生产许可证</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="生产许可证" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="doc-ta-1">统计年份</label>
-                    <input type="text" class="am-form-field" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}" placeholder="日历组件" readonly/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">企业状态</label>
+                    <div class="layui-input-block">
+                        <select name="city" lay-verify="required">
+                            <option value=""></option>
+                            <option value="0">北京</option>
+                            <option value="1">上海</option>
+                            <option value="2">广州</option>
+                            <option value="3">深圳</option>
+                            <option value="4">杭州</option>
+                        </select>
+                    </div>
                 </div>
 
-                <p><button type="submit" class="am-btn am-btn-default">提交</button></p>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">统计年份</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="date" id="date" autocomplete="off" class="layui-input" readonly>
+                    </div>
+                </div>
+
+                <button style="margin-left: 45%; margin-right: 45%" type="submit" class="layui-btn layui-btn-radius">提交</button>
 
             </form>
+
         </div>
-
     </div>
-    <script src="../assets/js/amazeui.min.js"></script>
-    <script src="../assets/js/amazeui.datatables.min.js"></script>
-    <script src="../assets/js/dataTables.responsive.min.js"></script>
-    <script src="../assets/js/app.js"></script>
 
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">
+        © leefly.xyz - 底部固定区域
+    </div>
+</div>
+
+<script type="text/html" id="productToolbar">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" lay-event="addProduct">添加产品</a>
+    </div>
+</script>
+
+<script type="text/html" id="productBar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script src="../assets/layui/layui.all.js"></script>
+<script src="../assets/js/save.js"></script>
 </body>
-
 </html>
