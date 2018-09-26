@@ -27,7 +27,6 @@
         product_category,
         product_name,
         executive_standard,
-        business_license,
         output,
         unit,
         company_id,
@@ -43,9 +42,9 @@
             #{item.output},
             #{item.unit},
             #{item.companyId},
-            #{item.deleted},
-            #{item.createTime},
-            #{item.updateTime}
+            0,
+            sysdate(),
+            sysdate()
             )
         </foreach>
     </insert>

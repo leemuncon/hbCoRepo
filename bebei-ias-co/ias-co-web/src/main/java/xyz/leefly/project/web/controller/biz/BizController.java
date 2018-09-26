@@ -2,10 +2,7 @@ package xyz.leefly.project.web.controller.biz;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.leefly.project.bo.Company;
 import xyz.leefly.project.service.BusinessService;
 import xyz.leefly.project.web.model.RespData;
@@ -19,7 +16,7 @@ public class BizController {
     private BusinessService businessService;
 
     @RequestMapping(method = RequestMethod.POST, value = "save")
-    public RespData<Long> save(EnterpriseInfo info) {
+    public RespData<Long> save(@RequestBody EnterpriseInfo info) {
         Long id = businessService.saveEnterpriseInfo(info);
         RespData<Long> resp = new RespData<>();
         resp.setData(id);

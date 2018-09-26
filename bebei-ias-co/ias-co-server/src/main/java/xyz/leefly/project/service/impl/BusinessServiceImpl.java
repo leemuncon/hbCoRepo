@@ -44,13 +44,21 @@ public class BusinessServiceImpl implements BusinessService {
         if (company == null) {
             return -1L;
         }
+        if (company.getProductionValueUnit() == null) {
+            company.setProductionValueUnit("万元");
+        }
         Long cid = companyMapper.saveCompany(company);
         List<Product> products = enterpriseInfo.getProducts();
         if (CollectionUtils.isNotEmpty(products)) {
             List<Product> collect = products
                     .stream()
                     .filter(Objects::nonNull)
-                    .peek(p -> p.setCompanyId(cid)).collect(Collectors.toList());
+                    .peek(p -> {
+                        p.setCompanyId(cid);
+                        if (p.getUnit() == null) {
+                            p.setUnit("万吨");
+                        }
+                    }).collect(Collectors.toList());
             productMapper.batchSaveProducts(collect);
         }
         List<Equipment> equipments = enterpriseInfo.getEquipments();
@@ -58,7 +66,12 @@ public class BusinessServiceImpl implements BusinessService {
             List<Equipment> collect = equipments
                     .stream()
                     .filter(Objects::nonNull)
-                    .peek(p -> p.setCompanyId(cid)).collect(Collectors.toList());
+                    .peek(e -> {
+                        e.setCompanyId(cid);
+                        if (e.getUnit() == null) {
+                            e.setUnit("万吨");
+                        }
+                    }).collect(Collectors.toList());
             equipmentMapper.batchSaveEquipments(collect);
         }
         return cid;

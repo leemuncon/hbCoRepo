@@ -32,11 +32,11 @@ public class Company {
 
     private String address;
     @TableField("stuff_number")
-    private Integer stuffNumber;
+    private String stuffNumber;
     @TableField("last_year_production_value")
-    private Integer lastYearProductionValue;
+    private String lastYearProductionValue;
     @TableField("production_value_unit")
-    private Integer productionValueUnit;
+    private String productionValueUnit;
     @TableField("laboratory_level")
     private String laboratoryLevel;
 
@@ -45,7 +45,7 @@ public class Company {
     private String productionLicense;
 
     private Integer status;
-
+    @TableField("check_year")
     private String checkYear;
 
     private Integer deleted;

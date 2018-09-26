@@ -21,7 +21,7 @@ public class Product {
     @TableField("executive_standard")
     private String executiveStandard;
 
-    private Integer output;
+    private String output;
 
     private String unit;
     @TableField("company_id")

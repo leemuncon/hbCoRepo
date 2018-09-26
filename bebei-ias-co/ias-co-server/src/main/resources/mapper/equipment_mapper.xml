@@ -38,9 +38,9 @@
             #{item.output},
             #{item.unit},
             #{item.companyId},
-            #{item.deleted},
-            #{item.createTime},
-            #{item.updateTime}
+            0,
+            sysdate(),
+            sysdate()
             )
         </foreach>
     </insert>

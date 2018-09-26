@@ -17,9 +17,9 @@ public class Equipment {
 
     private String type;
 
-    private Integer capacity;
+    private String capacity;
 
-    private Integer output;
+    private String output;
 
     private String unit;
     @TableField("company_id")
