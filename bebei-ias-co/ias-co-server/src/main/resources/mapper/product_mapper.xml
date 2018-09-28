@@ -49,4 +49,8 @@
         </foreach>
     </insert>
 
+    <update id="deleteProductsByCompanyId" timeout="100">
+        update product set deleted = 1 where company_id = #{companyId}
+    </update>
+
 </mapper>

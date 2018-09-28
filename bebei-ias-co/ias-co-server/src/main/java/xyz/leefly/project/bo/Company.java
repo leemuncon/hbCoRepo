@@ -28,7 +28,9 @@ public class Company {
 
     private String phone;
 
-    private String area;
+    private String province;
+    private String city;
+    private String district;
 
     private String address;
     @TableField("stuff_number")

@@ -27,6 +27,7 @@
         <div style="padding: 15px;">
 
             <form class="layui-form" id="companyForm">
+                <input id="id" th:value="${id}" type="hidden">
                 <div class="layui-form-item">
                     <label class="layui-form-label">公司名称</label>
                     <div class="layui-input-block">
@@ -173,7 +174,7 @@
                         <select name="status" lay-verify="required">
                             <option value=""></option>
                             <option value="0">正常</option>
-                            <option value="1">关闭</option>
+                            <option value="1">停业</option>
                         </select>
                     </div>
                 </div>
@@ -185,7 +186,8 @@
                     </div>
                 </div>
 
-                <a style="margin-left: 45%; margin-right: 45%" id="submitBtn" class="layui-btn layui-btn-radius">提交</a>
+                <a style="margin-left: 40%;" id="submitBtn" class="layui-btn layui-btn-radius save-btn-class">保存</a>
+                <a style="margin-right: 40%" id="newSubmitBtn" class="layui-btn layui-btn-radius save-btn-class">保存为新记录</a>
 
             </form>
 

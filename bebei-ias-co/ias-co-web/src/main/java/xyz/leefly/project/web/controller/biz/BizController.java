@@ -27,15 +27,11 @@ public class BizController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "list/{pageSize}/{pageNo}")
-    public RespData<Page<Company>> list(@PathVariable("pageSize") Integer pageSize, @PathVariable("pageNo") Integer pageNo) {
-        if (pageSize == null) {
-            pageSize = 10;
-        }
-        if (pageNo == null) {
-            pageNo = 1;
-        }
-        Page<Company> page = businessService.queryCompanies(null, pageNo, pageSize);
+    @RequestMapping(method = RequestMethod.GET, value = "list")
+    public RespData<Page<Company>> list(@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
+                                        @RequestParam(name = "limit", defaultValue = "10") Integer pageSize,
+                                        Company query) {
+        Page<Company> page = businessService.queryCompanies(query, pageNo, pageSize);
         RespData<Page<Company>> resp = new RespData<>();
         resp.setData(page);
         resp.setSuccess(true);
@@ -49,6 +45,17 @@ public class BizController {
         EnterpriseInfo info = businessService.getEnterpriseInfo(id);
         RespData<EnterpriseInfo> resp = new RespData<>();
         resp.setData(info);
+        resp.setSuccess(true);
+        resp.setCode(0);
+        resp.setMsg("success");
+        return resp;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "delete/{id}")
+    public RespData<Boolean> delete(@PathVariable("id") Long id) {
+        boolean okay = businessService.deleteCompany(id);
+        RespData<Boolean> resp = new RespData<>();
+        resp.setData(okay);
         resp.setSuccess(true);
         resp.setCode(0);
         resp.setMsg("success");

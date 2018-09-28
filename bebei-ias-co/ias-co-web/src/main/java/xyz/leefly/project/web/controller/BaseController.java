@@ -3,9 +3,8 @@ package xyz.leefly.project.web.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import xyz.leefly.project.web.config.WebConfigurer;
 import xyz.leefly.project.web.model.RespData;
 import xyz.leefly.project.web.utils.WebHelper;
@@ -19,7 +18,7 @@ public class BaseController {
 
     @RequestMapping(value = {"", "index", "home"}, method = RequestMethod.GET)
     public String index() {
-        return "index";
+        return "redirect:/list";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -62,6 +61,18 @@ public class BaseController {
     @RequestMapping(value = "save", method = RequestMethod.GET)
     public String save() {
         return "save";
+    }
+
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public String save(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("id", id);
+        return "save";
+    }
+
+    @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("id", id);
+        return "detail";
     }
 
 }

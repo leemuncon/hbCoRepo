@@ -11,5 +11,6 @@ public interface EquipmentMapper extends BaseMapper<Equipment> {
 
     void batchSaveEquipments(@Param("equipments") List<Equipment> equipments);
 
+    void deleteEquipmentsByCompanyId(@Param("companyId") Long companyId);
 
 }

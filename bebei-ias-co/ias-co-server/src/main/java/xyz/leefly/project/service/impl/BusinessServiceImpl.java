@@ -5,17 +5,16 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.leefly.project.bo.Company;
 import xyz.leefly.project.bo.Equipment;
 import xyz.leefly.project.bo.Product;
-import xyz.leefly.project.bo.User;
 import xyz.leefly.project.dao.mapper.CompanyMapper;
 import xyz.leefly.project.dao.mapper.EquipmentMapper;
 import xyz.leefly.project.dao.mapper.ProductMapper;
-import xyz.leefly.project.dto.CompanyQuery;
 import xyz.leefly.project.dto.EnterpriseInfo;
 import xyz.leefly.project.service.BusinessService;
 
@@ -47,14 +46,19 @@ public class BusinessServiceImpl implements BusinessService {
         if (company.getProductionValueUnit() == null) {
             company.setProductionValueUnit("万元");
         }
-        Long cid = companyMapper.saveCompany(company);
+        if (company.getId() == null) {
+            companyMapper.saveCompany(company);
+        } else {
+            companyMapper.updateById(company);
+        }
         List<Product> products = enterpriseInfo.getProducts();
         if (CollectionUtils.isNotEmpty(products)) {
+            productMapper.deleteProductsByCompanyId(company.getId());
             List<Product> collect = products
                     .stream()
                     .filter(Objects::nonNull)
                     .peek(p -> {
-                        p.setCompanyId(cid);
+                        p.setCompanyId(company.getId());
                         if (p.getUnit() == null) {
                             p.setUnit("万吨");
                         }
@@ -63,25 +67,63 @@ public class BusinessServiceImpl implements BusinessService {
         }
         List<Equipment> equipments = enterpriseInfo.getEquipments();
         if (CollectionUtils.isNotEmpty(equipments)) {
+            equipmentMapper.deleteEquipmentsByCompanyId(company.getId());
             List<Equipment> collect = equipments
                     .stream()
                     .filter(Objects::nonNull)
                     .peek(e -> {
-                        e.setCompanyId(cid);
+                        e.setCompanyId(company.getId());
                         if (e.getUnit() == null) {
                             e.setUnit("万吨");
                         }
                     }).collect(Collectors.toList());
             equipmentMapper.batchSaveEquipments(collect);
         }
-        return cid;
+        return company.getId();
     }
 
     @Override
-    public Page<Company> queryCompanies(CompanyQuery query, int pageNo, int pageSize) {
+    public Page<Company> queryCompanies(Company query, int pageNo, int pageSize) {
         Page<Company> page = new Page<>(pageNo, pageSize);
         EntityWrapper<Company> wrapper = Condition.wrapper();
-
+        wrapper.eq("deleted", 0);
+        if (query != null) {
+            if (StringUtils.isNotBlank(query.getName())) {
+                wrapper.like("name", query.getName());
+            }
+            if (StringUtils.isNotBlank(query.getNature())) {
+                wrapper.eq("nature", query.getNature());
+            }
+            if (StringUtils.isNotBlank(query.getLegalPerson())) {
+                wrapper.like("legal_person", query.getLegalPerson());
+            }
+            if (StringUtils.isNotBlank(query.getBusinessLicense())) {
+                wrapper.eq("business_license", query.getBusinessLicense());
+            }
+            if (StringUtils.isNotBlank(query.getContact())) {
+                wrapper.like("contact", query.getContact());
+            }
+            if (StringUtils.isNotBlank(query.getPhone())) {
+                wrapper.like("phone", query.getPhone());
+            }
+            if (StringUtils.isNotBlank(query.getProvince())) {
+                wrapper.eq("province", query.getProvince());
+            }
+            if (StringUtils.isNotBlank(query.getCity())) {
+                wrapper.eq("city", query.getCity());
+            }
+            if (StringUtils.isNotBlank(query.getDistrict())) {
+                wrapper.eq("district", query.getDistrict());
+            }
+            if (StringUtils.isNotBlank(query.getProductionLicense())) {
+                wrapper.eq("production_license", query.getProductionLicense());
+            }
+            if (query.getStatus() != null) {
+                wrapper.eq("status", query.getStatus());
+            }if (StringUtils.isNotBlank(query.getCheckYear())) {
+                wrapper.eq("check_year", query.getCheckYear());
+            }
+        }
         page.setRecords(companyMapper.selectPage(page, wrapper));
         return page;
     }
@@ -90,7 +132,7 @@ public class BusinessServiceImpl implements BusinessService {
     public Page<Equipment> queryEquipments(Long companyId, int pageNo, int pageSize) {
         Page<Equipment> page = new Page<>(pageNo, pageSize);
         EntityWrapper<Equipment> wrapper = Condition.wrapper();
-        wrapper.eq("company_id", companyId);
+        wrapper.eq("company_id", companyId).eq("deleted", 0);
         page.setRecords(equipmentMapper.selectPage(page, wrapper));
         return page;
     }
@@ -99,7 +141,7 @@ public class BusinessServiceImpl implements BusinessService {
     public Page<Product> queryProducts(Long companyId, int pageNo, int pageSize) {
         Page<Product> page = new Page<>(pageNo, pageSize);
         EntityWrapper<Product> wrapper = Condition.wrapper();
-        wrapper.eq("company_id", companyId);
+        wrapper.eq("company_id", companyId).eq("deleted", 0);
         page.setRecords(productMapper.selectPage(page, wrapper));
         return page;
     }
@@ -111,13 +153,25 @@ public class BusinessServiceImpl implements BusinessService {
             return null;
         }
         EnterpriseInfo info = new EnterpriseInfo();
+        info.setCompany(company);
+
         EntityWrapper<Product> pw = Condition.wrapper();
-        List<Product> products = productMapper.selectList(pw.eq("company_id", companyId));
+        List<Product> products = productMapper.selectList(pw.eq("company_id", companyId).eq("deleted", 0));
         info.setProducts(products);
 
         EntityWrapper<Equipment> ew = Condition.wrapper();
-        List<Equipment> equipments = equipmentMapper.selectList(ew.eq("company_id", companyId));
+        List<Equipment> equipments = equipmentMapper.selectList(ew.eq("company_id", companyId).eq("deleted", 0));
         info.setEquipments(equipments);
         return info;
+    }
+
+    @Override
+    public boolean deleteCompany(Long companyId) {
+        int row = companyMapper.deleteCompany(companyId);
+        if (row > 0) {
+            productMapper.deleteProductsByCompanyId(companyId);
+            equipmentMapper.deleteEquipmentsByCompanyId(companyId);
+        }
+        return row > 0;
     }
 }

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import xyz.leefly.project.bo.Company;
 import xyz.leefly.project.bo.Equipment;
 import xyz.leefly.project.bo.Product;
-import xyz.leefly.project.dto.CompanyQuery;
 import xyz.leefly.project.dto.EnterpriseInfo;
 
 public interface BusinessService {
@@ -21,7 +20,7 @@ public interface BusinessService {
      * @param query
      * @return
      */
-    Page<Company> queryCompanies(CompanyQuery query, int pageNo, int pageSize);
+    Page<Company> queryCompanies(Company query, int pageNo, int pageSize);
 
     /**
      * 查询企业的设备
@@ -47,5 +46,12 @@ public interface BusinessService {
      * @return
      */
     EnterpriseInfo getEnterpriseInfo(Long companyId);
+
+    /**
+     * 获取企业详情
+     * @param companyId
+     * @return
+     */
+    boolean deleteCompany(Long companyId);
 
 }

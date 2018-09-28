@@ -10,4 +10,6 @@ public interface ProductMapper extends BaseMapper<Product> {
 
     void batchSaveProducts(@Param("products") List<Product> products);
 
+    void deleteProductsByCompanyId(@Param("companyId")Long companyId);
+
 }

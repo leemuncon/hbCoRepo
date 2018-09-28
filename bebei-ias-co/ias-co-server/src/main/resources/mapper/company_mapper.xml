@@ -11,7 +11,9 @@
         <result column="business_license" property="businessLicense" jdbcType="VARCHAR"/>
         <result column="contact" property="contact" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
-        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="district" property="district" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="stuff_number" property="stuffNumber" jdbcType="INTEGER"/>
         <result column="last_year_production_value" property="lastYearProductionValue" jdbcType="INTEGER"/>
@@ -27,12 +29,12 @@
     </resultMap>
 
     <sql id="BaseColumn">
-        id, name, nature, legal_person, business_license, contact, phone, area, address,
+        id, name, nature, legal_person, business_license, contact, phone, province, city, district, address,
         stuff_number, last_year_production_value, production_value_unit, laboratory_level,
         authentication, production_license, status, check_year, deleted, create_time, update_time
     </sql>
 
-    <insert id="saveCompany" timeout="100">
+    <insert id="saveCompany" parameterType="xyz.leefly.project.bo.Company" timeout="100" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into company (
             name,
             nature,
@@ -40,7 +42,9 @@
             business_license,
             contact,
             phone,
-            area,
+            province,
+            city,
+            district,
             address,
             stuff_number,
             last_year_production_value,
@@ -60,7 +64,9 @@
             #{businessLicense},
             #{contact},
             #{phone},
-            #{area},
+            #{province},
+            #{city},
+            #{district},
             #{address},
             #{stuffNumber},
             #{lastYearProductionValue},
@@ -75,5 +81,9 @@
             sysdate()
         )
     </insert>
+
+    <update id="deleteCompany" timeout="100">
+      update company set deleted = 1 where id = #{companyId}
+    </update>
 
 </mapper>
