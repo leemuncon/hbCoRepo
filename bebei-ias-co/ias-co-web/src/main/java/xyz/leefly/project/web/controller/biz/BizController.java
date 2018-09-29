@@ -27,7 +27,7 @@ public class BizController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "list")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "list")
     public RespData<Page<Company>> list(@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                                         @RequestParam(name = "limit", defaultValue = "10") Integer pageSize,
                                         Company query) {

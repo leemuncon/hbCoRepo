@@ -31,7 +31,6 @@ public class WebLoginConfig implements WebMvcConfigurer {
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
                 throws Exception {
-            logger.info("------preHandle------");
             //获取session
             HttpSession session = request.getSession(true);
             //判断用户ID是否存在，不存在就跳转到登录界面

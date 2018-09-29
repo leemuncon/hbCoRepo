@@ -204,11 +204,17 @@ layui.use(['form', 'layedit', 'laydate', 'table'], function () {
                 if (resp.success) {
                     window.location = '/list';
                 } else {
-                    layer.alert("保存失败");
+                    layer.msg('保存失败', {
+                        time: 2000, //2s后自动关闭
+                        btn: ['确定']
+                    });
                 }
             },
             error: function () {
-                layer.alert("保存失败");
+                layer.msg('保存失败', {
+                    time: 2000, //2s后自动关闭
+                    btn: ['确定']
+                });
             }
         })
     })

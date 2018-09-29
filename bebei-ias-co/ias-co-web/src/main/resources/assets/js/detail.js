@@ -14,10 +14,18 @@ layui.use(['form', 'layedit', 'laydate', 'table'], function () {
                 initCompany(resp.data.company);
                 initProducts(resp.data.products);
                 initEquipments(resp.data.equipments);
+            } else {
+                layer.msg('查询失败', {
+                    time: 2000, //2s后自动关闭
+                    btn: ['确定']
+                });
             }
         },
         error: function () {
-            layer.alert("保存失败");
+            layer.msg('查询失败', {
+                time: 2000, //2s后自动关闭
+                btn: ['确定']
+            });
         }
     });
 

@@ -40,12 +40,24 @@ layui.use(['table', 'laydate', 'laypage'], function () {
         ]]
         ,page: true
         ,parseData: function(res){ //res 即为原始返回的数据
-            return {
-                "code": res.code,           //解析接口状态
-                "msg": res.msg,             //解析提示文本
-                "count": res.data.total,    //解析数据长度
-                "data": res.data.records    //解析数据列表
-            };
+            if (res.success) {
+                return {
+                    "code": res.code,           //解析接口状态
+                    "msg": res.msg,             //解析提示文本
+                    "count": res.data.total,    //解析数据长度
+                    "data": res.data.records    //解析数据列表
+                };
+            } else {
+                return {
+                    "code": res.code,
+                    "msg": res.msg,
+                    "count": 0,
+                    "data": []
+                };
+            }
+        }
+        ,done: function(res, curr, count){
+            console.log(res);
         }
         ,id: 'companyTable'
     });
@@ -68,11 +80,21 @@ layui.use(['table', 'laydate', 'laypage'], function () {
             url: '/biz/delete/' + id,
             type: 'get',
             dataType: 'json',
-            success: function () {
-                companyTable.reload();
+            success: function (res) {
+                if (res.success) {
+                    companyTable.reload();
+                } else {
+                    layer.msg('删除失败', {
+                        time: 2000, //2s后自动关闭
+                        btn: ['确定']
+                    });
+                }
             },
             error: function () {
-                layer.alert("删除失败");
+                layer.msg('删除失败', {
+                    time: 2000, //2s后自动关闭
+                    btn: ['确定']
+                });
             }
         })
     }
@@ -108,7 +130,7 @@ layui.use(['table', 'laydate', 'laypage'], function () {
         };
         table.reload('companyTable', {
             url:'/biz/list'
-            // ,contentType : 'application/json'
+            ,method : 'post'
             ,where: data
             ,page: {
                 curr: 1 //重新从第 1 页开始
