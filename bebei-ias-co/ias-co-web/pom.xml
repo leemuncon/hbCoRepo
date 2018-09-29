@@ -37,4 +37,25 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- 需要引用的jar包 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>server-boot</finalName>
+                    <mainClass>xyz.leefly.project.Bootstrap</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
