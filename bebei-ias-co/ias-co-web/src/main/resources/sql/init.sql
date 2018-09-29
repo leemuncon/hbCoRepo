@@ -1,5 +1,4 @@
-CREATE DATABASE hbgt;
-USE hbgt;
+USE test;
 
 CREATE TABLE `opt_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
