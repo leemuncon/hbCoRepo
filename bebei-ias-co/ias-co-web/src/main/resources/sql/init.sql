@@ -1,3 +1,6 @@
+CREATE DATABASE hbgt;
+USE hbgt;
+
 CREATE TABLE `opt_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `username` varchar(128) NOT NULL COMMENT '用户名',
