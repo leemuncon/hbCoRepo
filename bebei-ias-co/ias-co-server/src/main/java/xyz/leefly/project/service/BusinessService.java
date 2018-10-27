@@ -23,6 +23,13 @@ public interface BusinessService {
     Page<Company> queryCompanies(Company query, int pageNo, int pageSize);
 
     /**
+     * 通过查询条件查询公司
+     * @param query
+     * @return
+     */
+    Page<Company> queryCompanies(Company query, String productName, int pageNo, int pageSize);
+
+    /**
      * 查询企业的设备
      * @param companyId
      * @param pageNo

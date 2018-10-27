@@ -18,6 +18,8 @@ import xyz.leefly.project.dao.mapper.ProductMapper;
 import xyz.leefly.project.dto.EnterpriseInfo;
 import xyz.leefly.project.service.BusinessService;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -84,9 +86,29 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public Page<Company> queryCompanies(Company query, int pageNo, int pageSize) {
+        return queryCompaniesV1(query, null, pageNo, pageSize);
+    }
+
+    @Override
+    public Page<Company> queryCompanies(Company query, String productName, int pageNo, int pageSize) {
+        List<Long> companyIds = null;
+        if (StringUtils.isNotEmpty(productName)) {
+            companyIds = productMapper.queryCompanyIdByProductName(productName);
+        }
+        return queryCompaniesV1(query, companyIds, pageNo, pageSize);
+    }
+
+    private Page<Company> queryCompaniesV1(Company query, List<Long> companyIds, int pageNo, int pageSize) {
         Page<Company> page = new Page<>(pageNo, pageSize);
         EntityWrapper<Company> wrapper = Condition.wrapper();
         wrapper.eq("deleted", 0);
+        if (companyIds != null) {
+            if (companyIds.size() > 0) {
+                wrapper.in("id", companyIds);
+            } else {
+                return page;
+            }
+        }
         if (query != null) {
             if (StringUtils.isNotBlank(query.getName())) {
                 wrapper.like("name", query.getName());

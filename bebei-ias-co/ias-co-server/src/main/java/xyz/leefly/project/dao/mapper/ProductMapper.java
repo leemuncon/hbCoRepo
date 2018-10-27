@@ -12,4 +12,6 @@ public interface ProductMapper extends BaseMapper<Product> {
 
     void deleteProductsByCompanyId(@Param("companyId")Long companyId);
 
+    List<Long> queryCompanyIdByProductName(@Param("productName") String productName);
+
 }

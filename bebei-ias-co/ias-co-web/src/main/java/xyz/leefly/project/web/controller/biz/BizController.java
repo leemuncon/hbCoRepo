@@ -30,8 +30,8 @@ public class BizController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "list")
     public RespData<Page<Company>> list(@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                                         @RequestParam(name = "limit", defaultValue = "10") Integer pageSize,
-                                        Company query) {
-        Page<Company> page = businessService.queryCompanies(query, pageNo, pageSize);
+                                        Company query, String productName) {
+        Page<Company> page = businessService.queryCompanies(query, productName, pageNo, pageSize);
         RespData<Page<Company>> resp = new RespData<>();
         resp.setData(page);
         resp.setSuccess(true);

@@ -53,4 +53,8 @@
         update product set deleted = 1 where company_id = #{companyId}
     </update>
 
+    <select id="queryCompanyIdByProductName" resultType="long" parameterType="string">
+      select distinct company_id from product where product_name = #{productName}
+    </select>
+
 </mapper>

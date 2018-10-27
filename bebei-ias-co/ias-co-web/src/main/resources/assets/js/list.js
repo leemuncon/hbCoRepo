@@ -113,6 +113,7 @@ layui.use(['table', 'laydate', 'laypage'], function () {
         var productionLicense = form.find('[name="productionLicense"]').val();
         var status = form.find('[name="status"]').val();
         var checkYear = form.find('[name="checkYear"]').val();
+        var productName = form.find('[name="productName"]').val();
 
         var data = {
             name: name,
@@ -126,7 +127,8 @@ layui.use(['table', 'laydate', 'laypage'], function () {
             district: district,
             productionLicense: productionLicense,
             status: status,
-            checkYear: checkYear
+            checkYear: checkYear,
+            productName: productName
         };
         table.reload('companyTable', {
             url:'/biz/list'
